@@ -11,6 +11,7 @@ import ForgotPassword from "./ForgotPassword";
 function App() {
   return(
       <Container className='d-flex align-items-center justify-content-center' style = {{minHeight: "100vh"}}> 
+
           <Router>
           <AuthProvider>
             <Switch>
@@ -21,7 +22,7 @@ function App() {
             </Switch>
           </AuthProvider>
           </Router>
-          
+
       </Container>
   )
 }

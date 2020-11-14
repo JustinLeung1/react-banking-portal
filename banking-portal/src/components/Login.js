@@ -12,21 +12,30 @@ export default function Login() {
     const history = useHistory()
 
 
-    async function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
-
+    
         try {
-            setError('')
-            setLoading(true)
-            await login(emailRef.current.value, passwordRef.current.value)
+          setError("")
+          setLoading(true)
+          // await login(emailRef.current.value, passwordRef.current.value)
+          login(emailRef.current.value, passwordRef.current.value)
+          .then(response => {
+              console.log(response)
             history.push("/")
-        } catch (error) {
-            setLoading(false)
-            setError('Failed to sign in, ' + error)
+          })
+          .catch(error => {
+            console.log("Error");
+            console.log(error);
+          });
+    
+        } catch {
+          setError("Failed to log in")
         }
+    
         setLoading(false)
-        
-    }
+      }
+    
 
     return (
         <div className="w-100" style={{maxWidth:"400px"}}>

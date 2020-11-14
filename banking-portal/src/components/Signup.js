@@ -12,24 +12,32 @@ export default function Signup() {
     const [loading, setLoading] = useState(false)
     const history = useHistory()
 
-    async function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
-
+        
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
             return setError('Paswords do not match')
         }
+
         try {
-            setError('')
-            setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
+          setError("")
+          setLoading(true)
+          signup(emailRef.current.value, passwordRef.current.value)
+          .then(response => {
             history.push("/")
-        } catch (error) {
-            setLoading(false)
+          })
+          .catch(error => {
+            console.log("Error");
+            console.log(error);
+          });
+    
+        } catch {
             setError('Failed to create an account, ' + error)
         }
+    
         setLoading(false)
-        
-    }
+      }
+
 
     return (
         <div className="w-100" style={{maxWidth:"400px"}}>

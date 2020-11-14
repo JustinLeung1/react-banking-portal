@@ -1,5 +1,5 @@
 import React, { useState} from "react"
-import { Alert, Button, Card } from "react-bootstrap"
+import { Alert, Button } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
@@ -18,17 +18,12 @@ export default function Dashboard() {
         }
     }
     return (
-        <div> 
+        <div style={{minWidth:"1000px", minHeight:"100vh"}}> 
 
-            <Card>
-                {currentUser.uid}
-                <Card.Body>
-                <h2 className="text-center mb-4">Profile</h2>
+                <h2 className="text-left mb-4 ">Profile</h2>
                 {error && <Alert variant ="danger"></Alert>}
                 <strong>Email: </strong> {currentUser.email}
                 <Link to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</Link>
-                </Card.Body>
-            </Card>
 
             
             <div className="w-100 text-center mt-2">
