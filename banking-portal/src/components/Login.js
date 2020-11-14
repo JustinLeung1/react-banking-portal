@@ -29,7 +29,7 @@ export default function Login() {
     }
 
     return (
-        <div>
+        <div className="w-100" style={{maxWidth:"400px"}}>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Log In</h2>

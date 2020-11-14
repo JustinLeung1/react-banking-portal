@@ -7,7 +7,7 @@ export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup,currentUser } = useAuth()
+    const { signup } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -32,7 +32,7 @@ export default function Signup() {
     }
 
     return (
-        <div>
+        <div className="w-100" style={{maxWidth:"400px"}}>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Sign Up</h2>
