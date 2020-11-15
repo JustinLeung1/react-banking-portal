@@ -1,0 +1,14 @@
+.Dashboard {
+    width:100vw;
+    height: 100vh;
+    list-style-type: none;
+    background-color: #f3f3f3;
+}
+
+.Header {
+    margin-top: 1vh;
+}
+
+.Content{
+    margin-top: 1vh;
+}
