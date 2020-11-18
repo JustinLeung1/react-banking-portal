@@ -5,10 +5,16 @@
     background-color: #f3f3f3;
 }
 
-.Header {
+.Content{
+    position: absolute;
+    top: 0;
+    left: 5vw;
     margin-top: 1vh;
+    width: 82vw;
+    height: auto;
 }
 
-.Content{
+.Tile{
     margin-top: 1vh;
+    width: auto;
 }

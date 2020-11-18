@@ -27,6 +27,6 @@ export const SidebarData = [
     },
     {
         title: "Logout",
-        link: "/logout"
+        link: "/login"
     }
 ]

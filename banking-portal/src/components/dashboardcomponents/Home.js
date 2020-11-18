@@ -8,14 +8,14 @@ function Home () {
         //Home component with 3 cards
         //One header and two content cards
 
-      <div>
-          <Card className="Header">
+      <div className="Content">
+          <Card className="Tile">
               <Card.Body>
                 <h2>Home</h2>
               </Card.Body>
           </Card>
 
-          <Card className="Content">
+          <Card className="Tile">
             <Card.Body>
                 <h3>Bank Accounts</h3>
                 <ListGroup>
@@ -26,7 +26,7 @@ function Home () {
             </Card.Body>
           </Card>
 
-          <Card className="Content">
+          <Card className="Tile">
               <Card.Body>
                   <h3>Asset Summary</h3>
               </Card.Body>

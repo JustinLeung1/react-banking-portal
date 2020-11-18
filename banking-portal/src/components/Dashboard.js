@@ -1,5 +1,5 @@
 import React, { useState} from "react"
-import { Alert, Button, Container, Row, Col } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import "../styles/Dashboard.css"
@@ -30,9 +30,9 @@ export default function Dashboard() {
         //need to resize width of sidebar, currently allocated half the page
 
         <div className="Dashboard">
-        <Container fluid>
+            <Container fluid>
             <Row>
-                <Col>
+                <Col md={1}>
                     <Sidebar/>
                 </Col>
                 <Col>
