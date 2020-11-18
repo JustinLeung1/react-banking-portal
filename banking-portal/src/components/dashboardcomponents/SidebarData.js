@@ -3,16 +3,16 @@
 export const SidebarData = [
     {
         title: "Home",
-        link: "/home"
+        link: "/"
     },
     {
         title: "Profile",
         link: "/profile"
     },
-    {
+/*    {
         title: "Messages",
         link: "/messages"
-    },
+    }, */
     {
         title: "Transfers",
         link: "/transfers"
