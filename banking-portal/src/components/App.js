@@ -20,16 +20,20 @@ function App() {
           <Router>
           <AuthProvider>
             <Switch>
+              {/*Logged in routes */}
               <PrivateRoute exact path='/'component={Dashboard}/>
               <PrivateRoute path = '/Home' component={Dashboard}/>
-              <PrivateRoute path ='/SignUp' component={Signup}/>
-              <PrivateRoute path ='/LogIn' component={Login}/>
-              <PrivateRoute path ='/forgot-password' component={ForgotPassword}/>
               <PrivateRoute path ='/profile' component={Profile}/>
               <PrivateRoute path ='/loans' component={Loans}/>
               <PrivateRoute path ='/payments' component={Payments}/>
               <PrivateRoute path ='/transfers' component={Transfers}/>
               <PrivateRoute path ='/ChangePassword' component={ChangePassword}/>
+              {/*Logged out routes */}
+              <Route path ='/SignUp' component={Signup}/>
+              <Route path ='/LogIn' component={Login}/>
+              <Route path ='/forgot-password' component={ForgotPassword}/>
+
+
 
             </Switch>
           </AuthProvider>

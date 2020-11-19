@@ -24,9 +24,5 @@ export const SidebarData = [
     {
         title: "Loans",
         link: "/loans"
-    },
-    {
-        title: "Logout",
-        link: "/login"
     }
 ]

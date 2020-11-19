@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useState} from 'react'
 import "../../styles/Sidebar.css"
 import {SidebarData} from "./SidebarData"
+import { useHistory } from "react-router-dom"
 import logo from '../../images/chips-logo.png'
-
+import { useAuth } from "../../contexts/AuthContext"
 function Sidebar() {
+    const history = useHistory()
+    const [error, setError] = useState("")
+    const {currentUser, logout} = useAuth()
+
+    async function handleLogout(){
+        setError("")
+        try {
+            await logout()
+            history.push("/login")
+        } catch (error) {
+            setError("Failed to log out")
+        }
+    }
+
     return (
         //sidebar composed of profile image, welcome message, and list of
         //pages to visit
@@ -23,6 +38,7 @@ function Sidebar() {
                         </li>
                     );
                 })}
+                <li className="row" onClick={handleLogout}> Log Out</li>
             </ul>
         </div>
     );
