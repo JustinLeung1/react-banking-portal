@@ -4,7 +4,6 @@
     list-style-type: none;
     background-color: #f3f3f3;
 }
-
 .Content{
     position: absolute;
     top: 0;
@@ -17,4 +16,13 @@
 .Tile{
     margin-top: 1vh;
     width: auto;
+}
+
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
 }

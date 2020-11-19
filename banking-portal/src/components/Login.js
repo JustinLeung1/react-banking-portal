@@ -14,7 +14,7 @@ export default function Login() {
 
     function handleSubmit(e) {
         e.preventDefault()
-    
+
         try {
           setError("")
           setLoading(true)
@@ -28,14 +28,14 @@ export default function Login() {
             console.log("Error");
             console.log(error);
           });
-    
+
         } catch {
           setError("Failed to log in")
         }
-    
+
         setLoading(false)
       }
-    
+
 
     return (
         <div className="w-100" style={{maxWidth:"400px"}}>
@@ -46,11 +46,11 @@ export default function Login() {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" ref={emailRef} required/>                        
+                            <Form.Control type="email" ref={emailRef} required/>
                         </Form.Group>
                         <Form.Group id="password">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" ref={passwordRef} required/>                        
+                            <Form.Control type="password" ref={passwordRef} required/>
                         </Form.Group>
                         <Button disabled={loading} className="w-100" type="submit">
                             Log in

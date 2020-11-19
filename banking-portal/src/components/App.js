@@ -11,22 +11,25 @@ import ForgotPassword from "./ForgotPassword";
 import Loans from "./sidebarPages/Loans";
 import Payments from "./sidebarPages/Payments";
 import Transfers from "./sidebarPages/Transfers";
+import ChangePassword from "./ChangePassword";
 
 function App() {
   return(
-      <Container className='d-flex align-items-center justify-content-center' style = {{minHeight: "100vh"}}> 
+      <Container className='d-flex align-items-center justify-content-center' style = {{minHeight: "100vh"}}>
 
           <Router>
           <AuthProvider>
             <Switch>
               <PrivateRoute exact path='/'component={Dashboard}/>
-              <Route path ='/SignUp' component={Signup}/>
-              <Route path ='/LogIn' component={Login}/>
-              <Route path ='/forgot-password' component={ForgotPassword}/>
-              <Route path ='/profile' component={Profile}/>
-              <Route path ='/loans' component={Loans}/>
-              <Route path ='/payments' component={Payments}/>
-              <Route path ='/transfers' component={Transfers}/>
+              <PrivateRoute path = '/Home' component={Dashboard}/>
+              <PrivateRoute path ='/SignUp' component={Signup}/>
+              <PrivateRoute path ='/LogIn' component={Login}/>
+              <PrivateRoute path ='/forgot-password' component={ForgotPassword}/>
+              <PrivateRoute path ='/profile' component={Profile}/>
+              <PrivateRoute path ='/loans' component={Loans}/>
+              <PrivateRoute path ='/payments' component={Payments}/>
+              <PrivateRoute path ='/transfers' component={Transfers}/>
+              <PrivateRoute path ='/ChangePassword' component={ChangePassword}/>
 
             </Switch>
           </AuthProvider>
