@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom"
 export default function ChangePassword() {
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { currentUser, updatePassword } = useAuth()
+  const {updatePassword } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -27,10 +27,10 @@ export default function ChangePassword() {
 
     Promise.all(promises)
       .then(() => {
-        history.push("/")
+        history.push("/home")
       })
       .catch(() => {
-        setError("Failed to update account")
+        setError("Failed to change password")
       })
       .finally(() => {
         setLoading(false)
@@ -44,15 +44,6 @@ export default function ChangePassword() {
         <h2 className="text-center mb-4">Change Password</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
-          <Form.Group id="password">
-            <Form.Label>Current Password</Form.Label>
-            <Form.Control
-              type="password"
-              ref={passwordRef}
-              required
-              defaultValue={currentUser.password}
-            />
-          </Form.Group>
           <Form.Group id="password">
             <Form.Label>New Password</Form.Label>
             <Form.Control

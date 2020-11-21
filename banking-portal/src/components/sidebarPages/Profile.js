@@ -19,17 +19,13 @@ export default function Profile () {
                         <h2>Profle</h2>
                         <br></br>
                         <strong>USER: test@testtest.com</strong>
+                        <Link to = "/ChangePassword">
+                        <Button type ="Button">Change Password</Button>
+                        </Link>
                     </Card>
                 </Col>
             </Row>
         </Container>
-        <div className="Settings">
-        <Container fluid>
-          <Button block bsSize="large" >
-            <Link to = "/ChangePassword">Change Password</Link>
-          </Button>
-        </Container>
-        </div>
         </div>
     )
 }
