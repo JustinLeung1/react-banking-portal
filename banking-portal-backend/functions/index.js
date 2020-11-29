@@ -4,6 +4,9 @@ admin.initializeApp();
 
 const app = require('express')();
 
+const cors = require('cors');
+app.use(cors());
+
 const config = { 
     apiKey: "AIzaSyADeCtcKNOi4AeH5Nt0EEA5WGjtoyDSAMw",
     authDomain: "bankingapp-4f093.firebaseapp.com",
@@ -19,6 +22,12 @@ firebase.initializeApp(config);
 
 const db = admin.firestore();
 
+const {
+    validateSignupData,
+    validateLoginData,
+    reduceUserDetails,
+  } = require("./util/validators.js");
+const { json } = require('express');
 
 const FBAuth = (req, res, next) => {
     let idToken;
@@ -32,10 +41,16 @@ const FBAuth = (req, res, next) => {
     admin.auth().verifyIdToken(idToken)
     .then((decodedToken) => {
         req.user = decodedToken;
-        return db.collection(`users/${req.user.id}`).get();
+        console.log("userID = " + req.user.uid)
+        return db
+        .collection('users')
+        .where('userid', '==', req.user.uid)
+        .get();
     })
-    .then(data => {
-        req.user.email = data.docs[0].data().email;
+    .then((doc) => {
+
+        //console.log(doc) // need to figure out why this is not working
+        //req.user.email = data.docs[0].data().email;
         return next();
     })
     .catch((err) => {
@@ -178,8 +193,14 @@ app.post('/transfer', (req, res)=>{ // works for checking accounts
 app.post('/signup', (req, res)=>{
     const newUser = {
         email:req.body.email,
-        password:req.body.password
+        password:req.body.password,
+        confirmPassword: req.body.confirmPassword
     }
+
+    const { valid, errors } = validateSignupData(newUser);
+
+    if (!valid) return res.status(403).json(errors);
+
     let token, userid;
     firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
     .then(data =>{
@@ -192,7 +213,7 @@ app.post('/signup', (req, res)=>{
             email:newUser.email,
             userid:userid
         }).then(()=>{
-            return db.doc(`/users/${userid}`).collection('CheckingAccount').add({fake:'1'}) // make a note for this later
+            return db.doc(`/users/${userid}`).collection('CheckingAccount').add({fake:'1'}) // make a note for this later creates the collection but it isn't ideal
         })
     })
     .then(()=>{
@@ -201,7 +222,7 @@ app.post('/signup', (req, res)=>{
     .catch(err =>{
         console.error(err);
         if(err.code === 'auth/email-already-in-use'){
-            return res.status(400).json({email:'Email is already in use'});
+            return res.status(403).json({email:'Email is already in use'});
         }
         else{
             return res
@@ -215,6 +236,19 @@ const isEmpty = (string) =>{
     if(string.trim() === '') return true;
     else return false;
 }
+app.post('/test', (req, res)=>{
+    return db.collection("users").doc('0twpGqKhgzbvzzcJJHYtfOiD2PP2').get().
+    then((doc) =>{
+        if(doc.exists){
+            console.log(doc.data())
+            
+        }
+        else{
+            throw 'Table does not exist';
+        }
+    })
+    .catch((err) => {console.log(err)})
+})
 
 
 app.post('/login', (req, res)=>{
@@ -234,10 +268,8 @@ app.post('/login', (req, res)=>{
     .then(data =>{
         return data.user.getIdToken();
     })
-    .then(token =>{
-        return res
-        .status(201)
-        .json({token});
+    .then((token) =>{
+        return res.json({token});
     })
     .catch(err =>{
         console.error(err);
@@ -250,6 +282,24 @@ app.post('/login', (req, res)=>{
     })
 })
 
+
+app.get('/user' ,FBAuth, (req, res) => { // change this to email
+    let userID = req.user.uid;
+    let accounts = [];
+    console.log('working');
+    db.collection('CheckingAccounts').where('owner', '==', userID).get()
+    .then((data)=>{
+        data.forEach((doc)=>{
+            accounts.push({
+                AccountID:doc.id, 
+                AccountBalance:doc.data().AccountBalance
+            })
+        })
+        console.log(accounts);
+        return res.json(accounts)
+    })
+    .catch(err => console.error(err))
+  }); 
 
 
 

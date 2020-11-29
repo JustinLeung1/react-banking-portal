@@ -7,19 +7,19 @@ import Sidebar from "./dashboardcomponents/Sidebar"
 import Home from "./dashboardcomponents/Home"
 
 export default function Dashboard() {
-    const [error, setError] = useState("")
-    const {currentUser, logout} = useAuth()
-    const history = useHistory()
+    // const [error, setError] = useState("")
+    // const {currentUser, logout} = useAuth()
+    // const history = useHistory()
     
-    async function handleLogout(){
-        setError("")
-        try {
-            await logout()
-            history.push("/login")
-        } catch (error) {
-            setError("Failed to log out")
-        }
-    }
+    // async function handleLogout(){
+    //     setError("")
+    //     try {
+    //         await logout()
+    //         history.push("/login")
+    //     } catch (error) {
+    //         setError("Failed to log out")
+    //     }
+    // }
     return (
 
         //creates dashboard page with one column of the sidebar
