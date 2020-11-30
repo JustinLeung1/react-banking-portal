@@ -20,7 +20,7 @@ import store from '../redux/store';
 import axios from 'axios';
 
 import { SET_AUTHENTICATED } from '../redux/types';
-import { logoutUser } from '../redux/actions/userAction';
+import { logoutUser, getUserData} from '../redux/actions/userAction';
 
 
 
@@ -38,7 +38,7 @@ if (token) {
   } else {
     store.dispatch({ type: SET_AUTHENTICATED });
     axios.defaults.headers.common['Authorization'] = token;
-    //store.dispatch(getUserData());
+    store.dispatch(getUserData());
   }
 }
 

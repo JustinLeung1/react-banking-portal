@@ -12,7 +12,12 @@ class Sidebar extends Component{
     // const history = useHistory()
     // const [error, setError] = useState("")
     // const {currentUser, logout} = useAuth()
-
+    componentWillReceiveProps(nextProps) {
+        this.setState({props:nextProps})
+        // if (nextProps.UI.errors) {
+        //   this.setState({ errors: nextProps.UI.errors });
+        // }
+      }
     handleLogout = () => {
         this.props.logoutUser();
     }
@@ -20,7 +25,7 @@ class Sidebar extends Component{
         const {
             classes,
             user: {
-              credentials: { email },
+              email,
               loading,
               authenticated
             }
@@ -32,7 +37,7 @@ class Sidebar extends Component{
         //fill in onClick{} to add function to the buttons
         <div className="Sidebar">
             <img className="SidebarImage" src={logo} alt="logo"></img>
-            <h2 className="SidebarGreeting">Welcome, User</h2>
+            <h2 className="SidebarGreeting">Welcome, {email}</h2>
             <ul className="SidebarList">
                 {SidebarData.map((val, key) => {
                     return (

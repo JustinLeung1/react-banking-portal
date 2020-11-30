@@ -44,13 +44,14 @@ const FBAuth = (req, res, next) => {
         console.log("userID = " + req.user.uid)
         return db
         .collection('users')
-        .where('userid', '==', req.user.uid)
+        .where('userid', '==', req.user.uid).limit(1)
         .get();
     })
-    .then((doc) => {
+    .then((docs) => {
+        docs.forEach(doc=>{
+            req.user.email = doc.data().email
+        })
 
-        //console.log(doc) // need to figure out why this is not working
-        //req.user.email = data.docs[0].data().email;
         return next();
     })
     .catch((err) => {
@@ -125,15 +126,14 @@ app.post('/checking-account',(req, res) => {
       db.collection('CheckingAccounts').add(newCheckingAccount)
       .then((doc) =>{
           refenceToNewChecking.location = db.doc('CheckingAccounts/' + doc.id);
-          res.json({message:`document ${doc.id} has been created successfully`})
-          console.log(req.body.userid)
-        return db.collection('users').doc(req.body.userid).collection('CheckingAccounts').add(refenceToNewChecking)
+            return db.collection('users').doc(newCheckingAccount.Owner).collection('CheckingAccounts').add(refenceToNewChecking)
             .then(()=>{
             console.log("This works");
              return res.status(201).json({message:"Created checking account"})
             })
             .catch((err) => {
                 console.log("This failed");
+                console.log(err)
                 res.status(500).json({error: 'Something went wrong'});
                 return err;               
             }) ;
@@ -191,6 +191,8 @@ app.post('/transfer', (req, res)=>{ // works for checking accounts
 
 //Need to add to the database
 app.post('/signup', (req, res)=>{
+
+    
     const newUser = {
         email:req.body.email,
         password:req.body.password,
@@ -213,9 +215,29 @@ app.post('/signup', (req, res)=>{
             email:newUser.email,
             userid:userid
         }).then(()=>{
-            return db.doc(`/users/${userid}`).collection('CheckingAccount').add({fake:'1'}) // make a note for this later creates the collection but it isn't ideal
+            const newCheckingAccount = {
+                AccountBalance:1000,
+                Owner:userid,
+              }
+              const refenceToNewChecking = {
+                  location:''// add the doc.id to get a refernce to the
+              }
+              console.log(newCheckingAccount)
+              return db.collection('CheckingAccounts').add(newCheckingAccount)
+              .then((doc) =>{
+                  console.log(doc)
+                  refenceToNewChecking.location = db.doc('CheckingAccounts/' + doc.id);
+                    return db.collection('users').doc(userid).collection('CheckingAccounts').add(refenceToNewChecking)
+                    .then(()=>{
+                    console.log("This works");
+                    })
+                    .catch((err) => {
+                        console.log("This failed");
+                        res.status(500).json({error: 'Something went wrong'});
+                        return err;               
+                    }) ;
+            })
         })
-    })
     .then(()=>{
         return res.status(201).json({token})
     })
@@ -232,10 +254,6 @@ app.post('/signup', (req, res)=>{
     });
 })
 
-const isEmpty = (string) =>{
-    if(string.trim() === '') return true;
-    else return false;
-}
 app.post('/test', (req, res)=>{
     return db.collection("users").doc('0twpGqKhgzbvzzcJJHYtfOiD2PP2').get().
     then((doc) =>{
@@ -249,6 +267,7 @@ app.post('/test', (req, res)=>{
     })
     .catch((err) => {console.log(err)})
 })
+})
 
 
 app.post('/login', (req, res)=>{
@@ -257,10 +276,10 @@ app.post('/login', (req, res)=>{
         password:req.body.password
     }
 
-    let errors = {};
 
-    if(isEmpty(user.email)) errors.email = 'Must not be empty';
-    if(isEmpty(user.password)) errors.password = 'Must not be empty';
+    const { valid, errors } = validateLoginData(user);
+
+    if (!valid) return res.status(400).json(errors);
 
     if(Object.keys(errors).length > 0)return res.status(400).json(errors);
 
@@ -284,10 +303,10 @@ app.post('/login', (req, res)=>{
 
 
 app.get('/user' ,FBAuth, (req, res) => { // change this to email
+    let email = req.user.email;
     let userID = req.user.uid;
     let accounts = [];
-    console.log('working');
-    db.collection('CheckingAccounts').where('owner', '==', userID).get()
+    db.collection('CheckingAccounts').where('Owner', '==', userID).get()
     .then((data)=>{
         data.forEach((doc)=>{
             accounts.push({
@@ -295,8 +314,7 @@ app.get('/user' ,FBAuth, (req, res) => { // change this to email
                 AccountBalance:doc.data().AccountBalance
             })
         })
-        console.log(accounts);
-        return res.json(accounts)
+        return res.json({accounts:accounts, email:email})
     })
     .catch(err => console.error(err))
   }); 
