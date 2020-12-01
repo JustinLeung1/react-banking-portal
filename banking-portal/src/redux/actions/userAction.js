@@ -65,3 +65,18 @@ export const getUserData = () => (dispatch) => {
         .catch(err => console.log(err));
 }
 
+export const forgetPassword = (forgetPasswordData, history) => (dispatch) =>{
+    dispatch({type:LOADING_UI}); 
+    axios
+        .post('/forgot-password', forgetPasswordData)
+        .then((res) => {
+            dispatch({type: CLEAR_ERRORS});
+            history.push('/');
+        })
+    .catch((err) => {
+        dispatch({
+            type:SET_ERRORS,
+            payload: err.response.data
+        });
+    });
+}

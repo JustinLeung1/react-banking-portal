@@ -320,6 +320,19 @@ app.get('/user' ,FBAuth, (req, res) => { // change this to email
     .catch(err => console.error(err))
   }); 
 
+  app.post('/forgot-password', (req, res) => { // change this to email
+    let email = req.body.email;
+    firebase.auth().sendPasswordResetEmail(email)
+    .then(()=>{
+        return res.status(201).json({message:"Password Reset, Check Email"})
+    })
+    .catch((err) => {
+        console.log("This failed");
+        return res.status(500).json({error: 'Something went wrong: ' + err});
+                    
+    }) ;
+  }); 
+
 
 
 

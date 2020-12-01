@@ -61,7 +61,7 @@ class App extends Component {
               {/*Logged out routes */}
               <Route path ='/SignUp' component={Signup}/>
               <Route path ='/LogIn' component={Login}/>
-              <PrivateRoute path ='/forgot-password' component={ForgotPassword}/>
+              <Route path ='/forgot-password' component={ForgotPassword}/>
               
             </Switch>
           </Router>
