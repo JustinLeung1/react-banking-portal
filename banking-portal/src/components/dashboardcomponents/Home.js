@@ -10,13 +10,13 @@ function Home () {
 
       <div className="Content">
           <Card className="Tile">
-              <Card.Body>
+              <Card.Body className="TileHead">
                 <h2>Home</h2>
               </Card.Body>
           </Card>
 
           <Card className="Tile">
-            <Card.Body>
+            <Card.Body className="TileBody">
                 <h3>Bank Accounts</h3>
                 <ListGroup>
                     <ListGroup.Item>Checking Account</ListGroup.Item>
@@ -27,7 +27,7 @@ function Home () {
           </Card>
 
           <Card className="Tile">
-              <Card.Body>
+              <Card.Body className="TileBody">
                   <h3>Asset Summary</h3>
               </Card.Body>
           </Card>
