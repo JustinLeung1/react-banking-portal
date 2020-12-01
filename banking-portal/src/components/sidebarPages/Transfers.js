@@ -35,7 +35,7 @@ class Transfers extends Component {
             To:this.state.toAccount,
             Amount:this.state.amount
         };
-        this.props.transfer(transferData);
+        this.props.transfer(transferData, this.props.history);
     };
     handleChange = (event) => {
         this.setState({
