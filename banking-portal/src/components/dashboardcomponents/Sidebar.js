@@ -23,14 +23,12 @@ class Sidebar extends Component{
     }
     render(){
         const {
-            classes,
             user: {
               email,
               loading,
               authenticated
             }
         } = this.props;
-        console.log(this.props)
     return (
         //sidebar composed of profile image, welcome message, and list of
         //pages to visit
@@ -64,7 +62,6 @@ const mapStateToProps = (state) => ({
   Sidebar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
   };
 
 export default connect(mapStateToProps, {logoutUser})(Sidebar);

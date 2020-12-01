@@ -1,10 +1,60 @@
-import React from "react"
-import {Button, Dropdown, Form, DropdownButton, InputGroup, FormControl, Container, Row, Col, Card } from "react-bootstrap"
+import React, {Component} from "react"
+import {Button,Alert, Dropdown, Form, DropdownButton, InputGroup, FormControl, Container, Row, Col, Card } from "react-bootstrap"
 import Sidebar from "../dashboardcomponents/Sidebar"
 import "../../styles/Dashboard.css"
 import DropdownItem from "react-bootstrap/esm/DropdownItem"
+import { transfer } from '../../redux/actions/dataActions'
 
-export default function Transfers () {
+//Redux stuff
+import { connect } from 'react-redux';
+
+// new stuff from other video
+
+import PropTypes from 'prop-types';
+
+
+class Transfers extends Component {
+    constructor(){
+        super();
+        this.state = {
+            errors:{},
+            toAccount:"",
+            fromAccount:"",
+            amount:0.00,
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.errors) {
+          this.setState({ errors: nextProps.UI.errors });
+        }
+      };
+      handleSubmit = (e) =>{
+        e.preventDefault();
+        const transferData = { 
+            From: this.state.fromAccount,
+            To:this.state.toAccount,
+            Amount:this.state.amount
+        };
+        this.props.transfer(transferData);
+    };
+    handleChange = (event) => {
+        this.setState({
+          [event.target.name]: event.target.value
+        });
+      };
+
+    render(){
+        const {
+            classes,
+            UI: { loading },
+            user: {accounts}
+          } = this.props;
+
+          if (accounts){
+            this.state.fromAccount = (this.props.user.accounts[0].AccountID)
+            };
+          const { errors } = this.state;
+          console.log(errors)
     return (
         <div className="Dashboard">
             <Container fluid>
@@ -97,7 +147,7 @@ export default function Transfers () {
                                 </Card.Body>
                             </Card>
 
-
+                            {errors.error && <Alert variant="danger">{errors.error}</Alert>}
                             {/* 
                                 CARD FOR EXTERNAL TRANSFERS
 
@@ -115,7 +165,7 @@ export default function Transfers () {
                                     <h4>External Transfer</h4>
                                     <br></br>
 
-                                    <Form>
+                                    <Form onSubmit={this.handleSubmit} >
                                         <Form.Group as={Row} controlId="formHorizontalExternalSource">
                                             <Form.Label column sm={2}>
                                                 From Account
@@ -141,7 +191,7 @@ export default function Transfers () {
                                             </Form.Label>
                                             <Col>
                                                 <InputGroup>
-                                                    <FormControl id="externalTransferAccountId" size="lg" placeholder="Enter Destination Account Id. Format:  #####"></FormControl>
+                                                    <FormControl id="externalTransferAccountId" name="toAccount" value={this.state.toAccount} onChange={this.handleChange}size="lg" placeholder="Enter Destination Account Id. Format:  #####"></FormControl>
                                                 </InputGroup>
                                             </Col>
                                         </Form.Group>
@@ -156,10 +206,11 @@ export default function Transfers () {
                                                         <InputGroup.Text>$</InputGroup.Text>
                                                     </InputGroup.Prepend>
                                                 
-                                                    <FormControl id="externalTransferAmount" size="lg" placeholder="0.00"/>
+                                                    <FormControl id="externalTransferAmount" name="amount" value={this.state.amount} onChange={this.handleChange}size="lg" placeholder="0.00"/>
                                                 </InputGroup>
                                             </Col>
                                         </Form.Group>
+                                        <Button variant="success" type="submit" >Tranfer Funds</Button>
                                     </Form>
 
 
@@ -168,7 +219,7 @@ export default function Transfers () {
                                         no functionality yet
                                         variant just means the style/color of the button
                                     */}
-                                    <Button variant="success">Tranfer Funds</Button>
+                                    
 
 
                                 </Card.Body>
@@ -180,3 +231,22 @@ export default function Transfers () {
         </div>
     )
 }
+}
+
+Transfers.propTypes = {
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    transfer: PropTypes.func.isRequired
+  };
+const mapStateToProps = (state) => ({
+    user:state.user,
+    UI:state.UI
+})
+
+const mapActionsToProps = {
+    transfer
+  };
+
+
+export default connect(mapStateToProps, mapActionsToProps)(Transfers);

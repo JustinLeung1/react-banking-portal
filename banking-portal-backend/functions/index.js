@@ -167,6 +167,7 @@ app.post('/transfer', (req, res)=>{ // works for checking accounts
                 throw 'Not enough money in from account'; 
             }
             return transaction.get(toRef).then((doc) =>{
+                console.log(toRef)
                 if(!doc.exists){
                     throw 'To account does not exist!';
                 }
