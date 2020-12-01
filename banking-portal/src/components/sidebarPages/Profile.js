@@ -11,18 +11,28 @@ export default function Profile () {
         <div className="Dashboard">
         <Container fluid>
             <Row>
-                <Col>
+                <Col md={1}>
                     <Sidebar/>
                 </Col>
                 <Col>
-                    <Card classname="header">
-                        <h2>Profle</h2>
-                        <br></br>
-                        <strong>USER: test@testtest.com</strong>
-                        <Link to = "/ChangePassword">
-                        <Button type ="Button">Change Password</Button>
-                        </Link>
-                    </Card>
+                    <div className="Content">
+                        <Card className="Tile">
+                            <Card.Body className="TileHead">
+                                <h2>Profile</h2>
+                            </Card.Body>
+                        </Card>
+                    
+                        <Card className="Tile">
+                            <Card.Body className="TileBody">
+                                <strong>USER: test@testtest.com</strong>
+                                <br></br>
+                                <br></br>
+                                <Link to = "/ChangePassword">
+                                <Button type ="Button">Change Password</Button>
+                                </Link>
+                            </Card.Body>
+                        </Card>
+                    </div>
                 </Col>
             </Row>
         </Container>

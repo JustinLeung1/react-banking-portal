@@ -25,13 +25,13 @@ class Home extends Component {
 
       <div className="Content">
           <Card className="Tile">
-              <Card.Body>
+              <Card.Body className="TileHead">
                 <h2>Home</h2>
               </Card.Body>
           </Card>
 
           <Card className="Tile">
-            <Card.Body>
+            <Card.Body className="TileBody">
                 <h3>Bank Accounts</h3>
                     <Card>
                     <Card.Header>Checking Accounts</Card.Header>
@@ -54,7 +54,7 @@ class Home extends Component {
           </Card>
 
           <Card className="Tile">
-              <Card.Body>
+              <Card.Body className="TileBody">
                   <h3>Asset Summary</h3>
               </Card.Body>
           </Card>
