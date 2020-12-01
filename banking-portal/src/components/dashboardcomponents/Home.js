@@ -9,16 +9,32 @@ class Home extends Component {
         // if (nextProps.UI.errors) {
         //   this.setState({ errors: nextProps.UI.errors });
         // }
-      }
+      };
+
+
+    
 
     render(){
         const {
             user: {
               accounts,
+              email
             }
         } = this.props;
-
-    console.log(accounts)
+        console.log(this.props);
+        let accountData;
+        if(accounts){
+            accountData = accounts.map((account,index)=>{
+                return (
+                    <Card.Body>
+                        <Card.Title>{account.AccountID}</Card.Title>
+                        <Card.Text>
+                        ${account.AccountBalance.toFixed(2)}
+                        </Card.Text>
+                    </Card.Body>
+                    )
+                    })
+        }
     return (
         //Home component with 3 cards
         //One header and two content cards
@@ -35,20 +51,7 @@ class Home extends Component {
                 <h3>Bank Accounts</h3>
                     <Card>
                     <Card.Header>Checking Accounts</Card.Header>
-                    {
-                        accounts.map((account,index)=>{
-                            return (
-                                <Card.Body>
-                                    <Card.Title>{account.AccountID}</Card.Title>
-                                    <Card.Text>
-                                    ${account.AccountBalance.toFixed(2)}
-                                    </Card.Text>
-                                </Card.Body>
-                                )
-                        })
-                    
-                    }
-                    
+                        {accountData}
                     </Card>
             </Card.Body>
           </Card>
