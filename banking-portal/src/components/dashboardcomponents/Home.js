@@ -29,7 +29,7 @@ class Home extends Component {
                     <Card.Body>
                         <Card.Title>{account.AccountID}</Card.Title>
                         <Card.Text>
-                        ${account.AccountBalance.toFixed(2)}
+                        ${parseFloat(account.AccountBalance).toFixed(2)}
                         </Card.Text>
                     </Card.Body>
                     )

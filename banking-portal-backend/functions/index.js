@@ -172,8 +172,8 @@ app.post('/transfer', (req, res)=>{ // works for checking accounts
                     throw 'To account does not exist!';
                 }
                 toAccount.amount = doc.data().AccountBalance
-                transaction.update(fromRef, {AccountBalance: fromAccount.amount - amount});
-                transaction.update(toRef, {AccountBalance: toAccount.amount + amount});
+                transaction.update(fromRef, {AccountBalance: parseFloat(fromAccount.amount) - parseFloat(amount)});
+                transaction.update(toRef, {AccountBalance: parseFloat((toAccount.amount) + parseFloat((amount)))});
                 transaction.commit();
                 
             })
