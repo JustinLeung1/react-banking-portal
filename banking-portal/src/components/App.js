@@ -26,9 +26,9 @@ import { logoutUser, getUserData} from '../redux/actions/userAction';
 
 
 
-//axios.defaults.baseURL ='https://us-central1-bankingapp-4f093.cloudfunctions.net/api';
+axios.defaults.baseURL ='https://us-central1-bankingapp-4f093.cloudfunctions.net/api';
 
-axios.defaults.baseURL = 'http://localhost:5000/bankingapp-4f093/us-central1/api';
+//axios.defaults.baseURL = 'http://localhost:5000/bankingapp-4f093/us-central1/api';
 const token = localStorage.FBIdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
