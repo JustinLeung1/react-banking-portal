@@ -27,9 +27,9 @@ export default function Profile () {
                                 <strong>USER: test@testtest.com</strong>
                                 <br></br>
                                 <br></br>
-                                <Link to = "/ChangePassword">
+                                {/* <Link to = "/ChangePassword"> </Link> */}
                                 <Button type ="Button">Change Password</Button>
-                                </Link>
+                                
                             </Card.Body>
                         </Card>
                     </div>
