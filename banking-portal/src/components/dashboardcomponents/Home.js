@@ -21,7 +21,6 @@ class Home extends Component {
               email
             }
         } = this.props;
-        console.log(this.props);
         let accountData;
         if(accounts){
             accountData = accounts.map((account,index)=>{

@@ -54,7 +54,6 @@ class Transfers extends Component {
             this.state.fromAccount = (this.props.user.accounts[0].AccountID)
             };
           const { errors } = this.state;
-          console.log(errors)
     return (
         <div className="Dashboard">
             <Container fluid>

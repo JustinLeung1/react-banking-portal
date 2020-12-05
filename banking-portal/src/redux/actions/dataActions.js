@@ -14,7 +14,6 @@ export const transfer = (transferData, history) => (dispatch) =>{
         history.push('/home');
     })
     .catch((err) =>{
-        console.log(err.response)
         dispatch({
             type:SET_ERRORS,
             payload:err.response.data
