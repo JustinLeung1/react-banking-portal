@@ -1,0 +1,16 @@
+Github Repo : https://github.com/gregvansci/react-banking-portal 
+Link to deployed Project: https://48628aa37ac3.ngrok.io/
+
+Test user 
+    user: Test@test.com
+    pw: password
+
+Completed and Uncompleted,
+    Completed:
+        Log in
+        Sign up
+        Transfer from Checking to other accounts
+        Forgot password
+    Not Completed:
+        Profile saving
+        Signing up for more accounts(Code for it is in the backend)
